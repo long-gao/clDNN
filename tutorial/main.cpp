@@ -17,7 +17,7 @@ tensor create_tensor(int batch, int feature, int x, int y);
 
 int main()
 {
-    int iter = 10;
+    int iter = 1;
     double exe_time = 10;
     std::string data_type = "float32"; // "float32" or "float16"
     int batch = 1, in_size = 224, channel = 3, filter = 64, kernel = 7, padding = 3, stride = 2;
@@ -36,6 +36,7 @@ int main()
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
 
+    /*
     std::cout << "conv layer (1, 56, 64, 64, 3, 1, 1)"<< std::endl;
     batch = 1, in_size = 56, channel = 64, filter = 64, kernel = 3, padding = 1, stride = 1;
     input_tensor = create_tensor(batch, channel, in_size, in_size);
@@ -91,7 +92,7 @@ int main()
         exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
-
+    */
     return 0;
 
 }
@@ -105,9 +106,12 @@ double run_conv(tensor& input_tensor, tensor& weights_tensor, tensor& biases_ten
     //std::cout << "Run conv2d using clDNN." << std::endl;
 
     // Create an engine
-    const bool profiling = true;
-    engine engine(profiling);
-
+    // const bool profiling = true;
+    // engine engine(profiling);
+    
+    engine_configuration cfg{ true, true, true, std::string(), std::string(), false,  "./engine.log", "./", 0};
+    engine engine{ cfg };
+    
     // Create input memory for convolution layer
     memory input_prim = memory::allocate(engine, { data_types::f16, format::bfyx, input_tensor });
     memory weights    = memory::allocate(engine, { data_types::f16, format::bfyx, weights_tensor });
