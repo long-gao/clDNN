@@ -22,7 +22,8 @@ int main()
     std::string data_type = "float32"; // "float32" or "float16"
     int batch = 1, in_size = 224, channel = 3, filter = 64, kernel = 7, padding = 3, stride = 2;
 
-    std::cout << "conv layer (1, 224, 3, 64, 7, 3, 2)"<< std::endl;
+    // layer index 0
+    std::cout << "conv layer 0 (1, 224, 3, 64, 7, 3, 2)"<< std::endl;
     batch = 1, in_size = 224, channel = 3, filter = 64, kernel = 7, padding = 3, stride = 2;
     tensor input_tensor = create_tensor(batch, channel, in_size, in_size);
     tensor weights_tensor = create_tensor(filter, channel, kernel, kernel);
@@ -36,7 +37,7 @@ int main()
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
 
-    /*
+    // layer index 1
     std::cout << "conv layer (1, 56, 64, 64, 3, 1, 1)"<< std::endl;
     batch = 1, in_size = 56, channel = 64, filter = 64, kernel = 3, padding = 1, stride = 1;
     input_tensor = create_tensor(batch, channel, in_size, in_size);
@@ -51,6 +52,52 @@ int main()
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
 
+    // layer index 2
+    std::cout << "conv layer (1, 56, 64, 64, 1, 0, 1)"<< std::endl;
+    batch = 1, in_size = 56, channel = 64, filter = 64, kernel = 1, padding = 0, stride = 1;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 3
+    std::cout << "conv layer (1, 56, 64, 128, 3, 1, 2)"<< std::endl;
+    batch = 1, in_size = 56, channel = 64, filter = 128, kernel = 3, padding = 1, stride = 2;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 4
+    std::cout << "conv layer (1, 56, 64, 128, 1, 0, 2)"<< std::endl;
+    batch = 1, in_size = 56, channel = 64, filter = 128, kernel = 1, padding = 0, stride = 2;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 5
     std::cout << "conv layer (1, 28, 128, 128, 3, 1, 1)"<< std::endl;
     batch = 1, in_size = 28, channel = 128, filter = 128, kernel = 3, padding = 1, stride = 1;
     input_tensor = create_tensor(batch, channel, in_size, in_size);
@@ -64,7 +111,38 @@ int main()
         exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 6
+    std::cout << "conv layer (1, 28, 128, 256, 3, 1, 2)"<< std::endl;
+    batch = 1, in_size = 28, channel = 128, filter = 256, kernel = 3, padding = 1, stride = 2;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 7
+    std::cout << "conv layer (1, 28, 128, 256, 1, 0, 2)"<< std::endl;
+    batch = 1, in_size = 28, channel = 128, filter = 256, kernel = 1, padding = 0, stride = 2;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;    
     
+    // layer index 8
     std::cout << "conv layer (1, 14, 256, 256, 3, 1, 1)"<< std::endl;
     batch = 1, in_size = 14, channel = 256, filter = 256, kernel = 3, padding = 1, stride = 1;
     input_tensor = create_tensor(batch, channel, in_size, in_size);
@@ -79,6 +157,37 @@ int main()
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
 
+    // layer index 9
+    std::cout << "conv layer (1, 14, 256, 512, 3, 1, 2)"<< std::endl;
+    batch = 1, in_size = 14, channel = 256, filter = 512, kernel = 3, padding = 1, stride = 2;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 10
+    std::cout << "conv layer (1, 14, 256, 512, 1, 0, 2)"<< std::endl;
+    batch = 1, in_size = 14, channel = 256, filter = 512, kernel = 1, padding = 0, stride = 2;
+    input_tensor = create_tensor(batch, channel, in_size, in_size);
+    weights_tensor = create_tensor(filter, channel, kernel, kernel);
+    biases_tensor = create_tensor(1, 1, filter, 1);
+    stride_tensor = create_tensor(1, 1, stride, stride);
+    padding_tensor = create_tensor(0, 0, -padding, -padding);
+    exe_time = 0;
+    for (int i = 0; i < iter; i++)
+    {
+        exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
+    }
+    std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
+
+    // layer index 11
     std::cout << "conv layer (1, 7, 512, 512, 3, 1, 1)"<< std::endl;
     batch = 1, in_size = 7, channel = 512, filter = 512, kernel = 3, padding = 1, stride = 1;
     input_tensor = create_tensor(batch, channel, in_size, in_size);
@@ -92,7 +201,7 @@ int main()
         exe_time += run_conv(input_tensor, weights_tensor, biases_tensor, stride_tensor, padding_tensor, data_type);
     }
     std::cout << "Executing time: " << (exe_time / iter) << " milliseconds"<< std::endl;
-    */
+    
     return 0;
 
 }
@@ -174,7 +283,7 @@ double run_conv(tensor& input_tensor, tensor& weights_tensor, tensor& biases_ten
     // We have table of profiling metrics.
     for (auto& p : profiling_table)
     {
-        if (p.name == "conv")
+        if (true)
         {
             //std::cout << p.name << ":" << std::endl;
             double executing_time = 0;

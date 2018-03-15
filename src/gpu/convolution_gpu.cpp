@@ -60,7 +60,7 @@ public:
 
     static primitive_impl* create(const convolution_node &arg)
     {
-        std::cout << "[Trace]Create conv primitive" << std::endl;
+        // std::cout << "[Trace]Create conv primitive" << std::endl;
         const auto& primitive       = arg.get_primitive();
         const auto& input_layout    = arg.input().get_output_layout();
         const auto& weights_layout  = arg.weights(0).get_output_layout();

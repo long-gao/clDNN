@@ -51,7 +51,7 @@ public:
 
     static primitive_impl* create(const reorder_node& arg)
     {
-        std::cout << "[Trace] create reorder primitive" << std::endl;
+        // std::cout << "[Trace] create reorder primitive" << std::endl;
         auto&& input_layout = arg.input().get_output_layout();
         auto&& output_layout = arg.get_output_layout();
 
