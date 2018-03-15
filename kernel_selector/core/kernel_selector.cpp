@@ -81,18 +81,22 @@ namespace KernelSelector {
     {
         KernelsData kernelsData;
         std::string kernelName;
-
+        std::cout << "[Trace] GetNaiveBestKernel" << std::endl;
         if (params.GetType() == kType &&
             options.GetType() == kType)
         {
             const ParamsKey requireKey = params.GetParamsKey().Merge(options.GetSupportedKey());
+            int cnt  = 0;
             for (const auto& implementation : implementations)
             {
                 const ParamsKey implKey = implementation->GetSupportedKey();
+                std::cout << "[Trace] Kernel name: " << implementation->GetName() << std::endl;
                 if (implKey.Support(requireKey))
                 {
                     try
                     {
+                        std::cout << "[Trace] GetKernelsData for " << cnt << std::endl;
+                        cnt++;
                         KernelsData kds = implementation->GetKernelsData(params, options);
 
                         if (kds.size() && kds[0].kernels.size())
@@ -146,6 +150,7 @@ namespace KernelSelector {
     {
         KernelsData kernelsData;
         std::string kernelName;
+        std::cout << "[Trace]GetAutoTuneBestKernel" << std::endl;
 
         if (params.GetType() == kType &&
             options.GetType() == kType)
@@ -156,6 +161,7 @@ namespace KernelSelector {
             std::tuple<std::string, int> cachedKernelConfig;
             if (options.tuningParams.mode == TuningMode::TUNING_DISABLED) // Try to load kernel/config from offline cache
             {
+                std::cout << "[Trace]load kernel/config from offline cache" << std::endl;
 #if ENABLE_OFFLINE_TUNING_CACHE
                 cachedKernelConfig = autoTuner.LoadKernelOffline(params.engineInfo.deviceId, hash);
 #else
@@ -164,12 +170,14 @@ namespace KernelSelector {
             }
             else // Try to load kernel/config from on-line cache
             {
+                std::cout << "[Trace]load kernel/config from online cache" << std::endl;
                 cachedKernelConfig = autoTuner.LoadKernelOnline(options.tuningParams.mode, options.tuningParams.cacheFilePath, params.engineInfo.deviceId, params.engineInfo.driverVersion, params.engineInfo.hostVersion, hash);
             }       
             bool hashFoundInCache = !std::get<0>(cachedKernelConfig).empty();
 
             if (hashFoundInCache)
             {
+                std::cout << "[Trace]hashFoundInCache 1" << std::endl;
                 std::string cachedkernelName = std::get<0>(cachedKernelConfig);
                 int autoTuneIndex = std::get<1>(cachedKernelConfig);
 
@@ -199,11 +207,13 @@ namespace KernelSelector {
                 (options.tuningParams.mode != TuningMode::TUNING_TUNE_AND_CACHE) || // On-line tuning is not allowed.
                 !options.tuningParams.runner ) // Runner is invalid - can't run on-line tuning
             {
+                std::cout << "[Trace]hashFoundInCache 2" << std::endl;
                 // Fall back to the default path.
                 return GetNaiveBestKernel(params, options, kType);
             }    
 
             // Start on-line tuning
+            std::cout << "[Trace]Start on-line tuning" << std::endl;
             assert(options.tuningParams.runner);
 
             for (const auto& implementation : implementations)

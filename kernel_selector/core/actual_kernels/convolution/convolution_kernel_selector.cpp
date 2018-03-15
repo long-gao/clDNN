@@ -55,8 +55,8 @@ namespace KernelSelector
 
     KernelsData ConvolutionKernelSelctor::GetBestKernels(const Params& params, const OptionalParams& options) const
     {
-        //const ConvolutionParams& orgParams = static_cast<const ConvolutionParams&>(params);
-        //std::cout << orgParams.to_string() << std::endl;
+        const ConvolutionParams& orgParams = static_cast<const ConvolutionParams&>(params);
+        std::cout << "[Trace]" << orgParams.to_string() << std::endl;
         return GetAutoTuneBestKernel(params, options, KernelType::CONVOLUTION);
     }
 }

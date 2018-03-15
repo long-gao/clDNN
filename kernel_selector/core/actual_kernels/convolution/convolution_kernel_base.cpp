@@ -183,6 +183,7 @@ namespace KernelSelector
 
     KernelsData ConvolutionKernelBase::GetCommonKernelsData(const Params& params, const OptionalParams& options, const std::string exeMode, int autoTuneIndex) const
     {
+        // std::cout << "[Trace] GetCommonKernelsData" << std::endl;
         if (!Validate(params, options))
         {
             return{};
